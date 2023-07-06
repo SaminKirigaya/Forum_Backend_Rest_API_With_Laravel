@@ -55,6 +55,10 @@ class Changepasssub extends Controller
             }
                 
                 
+        }else{
+            return response()->json([
+                'message' => 'Sorry User Does Not Exist In Database.',
+            ],200);
         }
         
     }
