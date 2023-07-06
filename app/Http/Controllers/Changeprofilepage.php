@@ -13,7 +13,9 @@ class Changeprofilepage extends Controller
         
             $is_logged_in = DB::table('tokendb')->where('token',$tokenz)->count()>0; //lets see if he has token in db
             if($is_logged_in){//he has it now
-                $all_data = DB::table('users')->select('*')->where('slno',$usersl)->get(); //taking all user slno related data
+
+                $user_em = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
+                $all_data = DB::table('users')->select('*')->where('email',$user_em->user_email)->get(); //taking all user slno related data
                 foreach($all_data as $userdata){
                     $userSerial = $userdata->slno;
                     $userEmail = $userdata->email;

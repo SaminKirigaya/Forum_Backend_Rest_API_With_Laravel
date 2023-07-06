@@ -52,6 +52,15 @@ class Registration extends Controller
 
         
                 ]);//enter inside DB
+                //set initial recover pass
+                
+                DB::table('otp_smtp')->insert([
+                    'email'=> $mail,
+                    'otp'=> $pass2
+                    
+
+        
+                ]);
                 //successful
                 return response()->json([
                     'message' => 'Registration Successful Please Login With Your Credential For First Time.',
