@@ -35,7 +35,7 @@ class Login extends Controller
                         if($mail_exist){
                             $Db_pass = DB::table('users')->select('pass')->where('email',$mail)->first(); //get emails same row pass
                             if(Hash::check($pass, $Db_pass->pass)){
-                                $tokens = Str::random(50); //if pass match here create a token
+                                $tokens = Str::random(150); //if pass match here create a token
                                 DB::table('tokendb')->insert([ //upon login save the token inside token database
                                         'user_email' => $mail,
                                         'token' => $tokens
