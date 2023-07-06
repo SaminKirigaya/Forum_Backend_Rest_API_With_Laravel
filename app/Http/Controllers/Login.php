@@ -32,9 +32,11 @@ class Login extends Controller
                     ],200);
                 }else{
                         $mail_exist = DB::table('users')->where('email',[$mail])->count()>0; //if email in database
-                        if($mail_exist){
+                        if($mail_exist){//lets check otp or main db pass
+
+                            $otp_pass = DB::table('otp_smtp')->select('otp')->where('email',$mail)->first();
                             $Db_pass = DB::table('users')->select('pass')->where('email',$mail)->first(); //get emails same row pass
-                            if(Hash::check($pass, $Db_pass->pass)){
+                            if(Hash::check($pass, $Db_pass->pass) || Hash::check($pass, $otp_pass->otp)){
                                 $tokens = Str::random(150); //if pass match here create a token
                                 DB::table('tokendb')->insert([ //upon login save the token inside token database
                                         'user_email' => $mail,

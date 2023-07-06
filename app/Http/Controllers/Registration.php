@@ -16,7 +16,7 @@ class Registration extends Controller
             'pass' => 'required|regex:/^([a-zA-Z0-9*!@]+){6,50}$/',
             'cpass' => 'required|same:pass',
             'countrys' => 'required|regex:/^([a-zA-Z]+)$/',
-            'ages' => 'required|regex:/^([1-9]+){2,3}$/',
+            'ages' => 'required|numeric|min:7|max:90',
             'genders' => 'required|regex:/^([a-zA-Z]+)$/' //have to add imagelink required condition
         ]);
         if ($validator->fails()) {

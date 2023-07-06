@@ -19,7 +19,7 @@ class Changeprofilesub extends Controller
                 $validator = Validator::make($req->all(), [
                     'email' => 'required|email',
                     'countrys' => 'required|regex:/^([a-zA-Z]+)$/',
-                    'ages' => 'required|regex:/^([1-9]+){2,3}$/',
+                    'ages' => 'required|numeric|min:7|max:90',
                     'genders' => 'required|regex:/^([a-zA-Z]+)$/' //have to add imagelink required condition
                 ]);
                 if ($validator->fails()) {
