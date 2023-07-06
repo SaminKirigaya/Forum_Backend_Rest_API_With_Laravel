@@ -20,7 +20,7 @@ class Login extends Controller
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $validator->errors()
-            ], 422);
+            ], 200);
         }else{
                 $mail = $req->input('email');
                 $pass = $req->input('password');

@@ -23,13 +23,14 @@ class Registration extends Controller
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $validator->errors()
-            ], 422);
+            ], 200);
         }else{
             $mail = $req->input('email');
             $pass = $req->input('pass');
             $countryz = $req->input('countrys');
             $agez = $req->input('ages');
             $genderz = $req->input('genders');
+            //image must be added here that will be converted to asset link when front end is created
 
             $acc_exist = DB::table('users')->where('email',[$mail])->count()>0;
             //if account exist
