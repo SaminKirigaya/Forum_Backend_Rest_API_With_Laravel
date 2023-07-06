@@ -17,7 +17,7 @@ class Registration extends Controller
             'cpass' => 'required|same:pass',
             'countrys' => 'required|regex:/^([a-zA-Z]+)$/',
             'ages' => 'required|regex:/^([1-9]+){2,3}$/',
-            'genders' => 'required|regex:/^([a-zA-Z]+)$/'
+            'genders' => 'required|regex:/^([a-zA-Z]+)$/' //have to add imagelink required condition
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -48,7 +48,7 @@ class Registration extends Controller
                     'country' => $countryz,
                     'age'=> $agez,
                     'gender'=> $genderz,
-                    'imglink'=> 'localdisk/something'
+                    'imglink'=> 'localdisk/something' //will update later
 
         
                 ]);//enter inside DB
