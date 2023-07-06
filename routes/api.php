@@ -11,6 +11,9 @@ use App\Http\Controllers\Changeprofilesub;
 use App\Http\Controllers\Changepasssub;
 use App\Http\Controllers\Logout;
 use App\Http\Controllers\Forgotpass;
+use App\Http\Controllers\Post;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,3 +46,5 @@ Route::post('/changepasssub/{usersl}/{tokenz}',[Changepasssub::class,'changepass
 Route::get('/logout/{usersl}/{tokenz}',[Logout::class,'logout']); // after logout is clicked
 
 Route::post('/forgotpass',[Forgotpass::class,'forgotpass']); // forgot password after giving email
+
+Route::post('/post/{usersl}/{tokenz}',[Post::class,'post']); // posting comment
