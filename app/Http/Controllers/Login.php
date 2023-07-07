@@ -47,13 +47,15 @@ class Login extends Controller
                                 foreach ($userdet as $user) {
                                     $usersl = $user->slno;
                                     $usermail = $user->email;
+                                    $userimage = $user->imglink;
                                 // ... use the values as needed
                                 }
                                 return response()->json([
                                     'message' => 'Login Successful',
                                     'usersl' => $usersl,
                                     'useremail' => $usermail,
-                                    'token' =>  $tokens
+                                    'token' =>  $tokens,
+                                    'image' =>  $userimage
                                 ],200); // send response after login
                 
 
@@ -69,13 +71,16 @@ class Login extends Controller
                                 foreach ($userdet as $user) {
                                     $usersl = $user->slno;
                                     $usermail = $user->email;
+                                    $userimage = $user->imglink;
                                 // ... use the values as needed
                                 }
                                 return response()->json([
                                     'message' => 'Login Successful',
                                     'usersl' => $usersl,
                                     'useremail' => $usermail,
-                                    'token' =>  $tokens
+                                    'token' =>  $tokens,
+                                    'image' =>  $userimage
+
                                 ],200); // send response after login
                             }
                             else{
