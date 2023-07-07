@@ -13,7 +13,10 @@ use App\Http\Controllers\Logout;
 use App\Http\Controllers\Delete;
 use App\Http\Controllers\Forgotpass;
 use App\Http\Controllers\Post;
-
+use App\Http\Controllers\Posttypes;
+use App\Http\Controllers\HomepagePost;
+use App\Http\Controllers\LatestPost;
+use App\Http\Controllers\Topicpost;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +54,12 @@ Route::get('/delete/{tokenz}',[Delete::class,'delete']);
 Route::post('/forgotpass',[Forgotpass::class,'forgotpass']); // forgot password after giving email
 
 Route::post('/post/{usersl}/{tokenz}',[Post::class,'post']); // posting comment
+
+Route::get('/postTypes',[Posttypes::class,'posttypes']); // get types of posts
+
+Route::get('/homepost',[HomepagePost::class,'homepagepost']); //get random post data for homepage
+
+Route::get('/latestpost',[LatestPost::class,'latestpost']); // latest post
+
+Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); //navbar dropdown choice to see which code language problem u want
 
