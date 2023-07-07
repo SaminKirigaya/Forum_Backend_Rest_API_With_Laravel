@@ -32,8 +32,8 @@ class Post extends Controller
                         $post = $req->input('post');
                         $probName = $req->input('prob_intro');
 
-                        $charactersToReplace = ['<', '>', '/'];
-                        $replacementCharacters = ['&lt;', '&gt;', '&#47;'];
+                        $charactersToReplace = ['<', '>', '/',';'];
+                        $replacementCharacters = ['&lt;', '&gt;', '&#47;', '&#59;'];
 
                         $post = str_replace($charactersToReplace, $replacementCharacters, $post);
                         $probName = str_replace($charactersToReplace, $replacementCharacters, $probName);

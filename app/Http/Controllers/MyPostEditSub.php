@@ -30,8 +30,8 @@ class MyPostEditSub extends Controller
                                 ], 200);
                             }else{
                                 //save it
-                                $charactersToReplace = ['<', '>', '/'];
-                                $replacementCharacters = ['&lt;', '&gt;', '&#47;'];
+                                $charactersToReplace = ['<', '>', '/',';'];
+                                $replacementCharacters = ['&lt;', '&gt;', '&#47;','&#59;'];
 
                                 $postName = str_replace($charactersToReplace, $replacementCharacters, $req->input('introduction'));
                                 $probVal = str_replace($charactersToReplace, $replacementCharacters, $req->input('mainpost'));

@@ -22,6 +22,9 @@ use App\Http\Controllers\SearchPost;
 use App\Http\Controllers\Solve;
 use App\Http\Controllers\Comment;
 use App\Http\Controllers\MyPostEdit;
+use App\Http\Controllers\MyPostEditSub;
+use App\Http\Controllers\MyPostDelete;
+use App\Http\Controllers\MyCommentedPost;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -78,3 +81,7 @@ Route::post ('/searchpost/{usersl}/{tokenz}',[SearchPost::class,'searchpost']); 
 Route::get('/solve/{usersl}/{tokenz}/{probslno}',[Solve::class,'solve']); //solving page where we see post comment and see comments
 
 Route::post('/comment/{usersl}/{tokenz}/{probslno}',[Comment::class,'comment']); //submit comment with click
+
+Route::get('/mypostdelete/{usersl}/{tokenz}/{postno}',[MyPostDelete::class,'mypostdelete']); // after clicking delete confirm
+
+Route::get('/mycommentedPost/{usersl}/{tokenz}',[MyCommentedPost::class,'mycommentedpost']); // when i just go to my comment page to see all post where I comment (no comment shown here only the post data) with the post detail button

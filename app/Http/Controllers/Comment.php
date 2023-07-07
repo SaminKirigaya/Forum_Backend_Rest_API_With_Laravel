@@ -29,8 +29,8 @@ class Comment extends Controller
                             ], 200);
                         }else{
                             $com = $req->input('comment');
-                            $charactersToReplace = ['<', '>', '/'];
-                            $replacementCharacters = ['&lt;', '&gt;', '&#47;'];
+                            $charactersToReplace = ['<', '>', '/', ';'];
+                            $replacementCharacters = ['&lt;', '&gt;', '&#47;', '&#59;'];
 
                             $commnt = str_replace($charactersToReplace, $replacementCharacters, $com);
                             $userslnum = intval($usersl);
