@@ -29,6 +29,8 @@ use App\Http\Controllers\MyCommentSpecific;
 use App\Http\Controllers\IEnteredHere;
 use App\Http\Controllers\PostLike;
 use App\Http\Controllers\PostDisLike;
+use App\Http\Controllers\ComLike;
+use App\Http\Controllers\ComDisLike;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -98,3 +100,6 @@ Route::get('/postlike/{usersl}/{tokenz}/{postno}',[PostLike::class,'postlike']);
 
 Route::get('/postdislike/{usersl}/{tokenz}/{postno}',[PostDisLike::class,'postdislike']); // post dislike button click
 
+Route::get('/comlike/{usersl}/{tokenz}/{comntno}',[ComLike::class,'comlike']); // comment like button click
+
+Route::get('/comdislike/{usersl}/{tokenz}/{comntno}',[ComDisLike::class,'comdislike']); // comment like button click
