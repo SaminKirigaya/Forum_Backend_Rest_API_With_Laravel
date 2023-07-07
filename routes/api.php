@@ -17,7 +17,10 @@ use App\Http\Controllers\Posttypes;
 use App\Http\Controllers\HomepagePost;
 use App\Http\Controllers\LatestPost;
 use App\Http\Controllers\Topicpost;
-
+use App\Http\Controllers\MyPost;
+use App\Http\Controllers\SearchPost;
+use App\Http\Controllers\Solve;
+use App\Http\Controllers\Comment;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,3 +67,9 @@ Route::get('/latestpost',[LatestPost::class,'latestpost']); // latest post
 Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); //navbar dropdown choice to see which code language problem u want
 
 Route::get('/mypost/{usersl}/{tokenz}',[MyPost::class,'mypost']); // seeing own post in profile
+
+Route::post ('/searchpost/{usersl}/{tokenz}',[SearchPost::class,'searchpost']); // after client logging if search a post
+
+Route::get('/solve/{usersl}/{tokenz}/{probslno}',[Solve::class,'solve']); //solving page where we see post comment and see comments
+
+Route::post('/comment/{usersl}/{tokenz}/{probslno}',[Comment::class,'comment']); //submit comment with click
