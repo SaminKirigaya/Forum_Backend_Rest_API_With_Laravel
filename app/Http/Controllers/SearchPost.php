@@ -14,7 +14,7 @@ class SearchPost extends Controller
                 if($tok_email->user_email == $usrsl_email->email){
 
                     $searchQuery = $req->input('searchdata');
-                    $result = DB::table('posts')->select('*')->whereRaw("MATCH (user_post, intro) AGAINST(? IN BOOLEAN MODE)",[$searchQuery])->get();
+                    $result = DB::table('posts')->select('*')->whereRaw("MATCH (user_post, intro) AGAINST(? IN BOOLEAN MODE)",[$searchQuery])->orderBy('slno','desc')->get();
 
                     foreach($result as $resultdata){
                         $mailval = DB::table('users')->select('email')->where('slno',$resultdata->user_slno)->first();

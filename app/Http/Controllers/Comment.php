@@ -43,9 +43,16 @@ class Comment extends Controller
                                 'dislike_amount'=>0
                             ]);
                             if($com_submit){
+                                $comnt = DB::table('posts')->select('total_comments')->where('slno',$probslnum)->first();
+                                $comnt->total_comments = $comnt->total_comments+1;
+                                DB::table('posts')->where('slno',$probslnum)->update([
+                                    'total_comments'=> $comnt->total_comments
+                                ]);
                                 return response()->json([
                                     'message'=>'Comment Successful'
                                 ],200);
+                                
+
                             }else{
                                 return response()->json([
                                     'message'=>'Comment Failed'

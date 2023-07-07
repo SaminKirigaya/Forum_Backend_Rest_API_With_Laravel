@@ -26,6 +26,9 @@ use App\Http\Controllers\MyPostEditSub;
 use App\Http\Controllers\MyPostDelete;
 use App\Http\Controllers\MyCommentedPost;
 use App\Http\Controllers\MyCommentSpecific;
+use App\Http\Controllers\IEnteredHere;
+use App\Http\Controllers\PostLike;
+use App\Http\Controllers\PostDisLike;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -88,3 +91,10 @@ Route::get('/mypostdelete/{usersl}/{tokenz}/{postno}',[MyPostDelete::class,'mypo
 Route::get('/mycommentedPost/{usersl}/{tokenz}',[MyCommentedPost::class,'mycommentedpost']); // when i just go to my comment page to see all post where I comment (no comment shown here only the post data) with the post detail button
 
 Route::get('/mycommentspecific/{usersl}/{tokenz}/{postno}',[MyCommentSpecific::class,'mycommentspecific']); // now i will go to that specific post in different page and see what we all commented while my comment is at top
+
+Route::get('/ientered/{usersl}/{tokenz}/{postno}',[IEnteredHere::class,'ienteredhere']); // whenever we click view more in post div or comment profile page and see other page view more
+
+Route::get('/postlike/{usersl}/{tokenz}/{postno}',[PostLike::class,'postlike']); // post like button click
+
+Route::get('/postdislike/{usersl}/{tokenz}/{postno}',[PostDisLike::class,'postdislike']); // post dislike button click
+
