@@ -31,6 +31,7 @@ use App\Http\Controllers\PostLike;
 use App\Http\Controllers\PostDisLike;
 use App\Http\Controllers\ComLike;
 use App\Http\Controllers\ComDisLike;
+use App\Http\Controllers\MyPostComDel;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -103,3 +104,5 @@ Route::get('/postdislike/{usersl}/{tokenz}/{postno}',[PostDisLike::class,'postdi
 Route::get('/comlike/{usersl}/{tokenz}/{comntno}',[ComLike::class,'comlike']); // comment like button click
 
 Route::get('/comdislike/{usersl}/{tokenz}/{comntno}',[ComDisLike::class,'comdislike']); // comment like button click
+
+Route::get('/mypostcomdel/{usersl}/{tokenz}/{comntno}',[MyPostComDel::class,'mypostcomdel']); // when seeing own post in profile uwll see abutton to delete that post comment
