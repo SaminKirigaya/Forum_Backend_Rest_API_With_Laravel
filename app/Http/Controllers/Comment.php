@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class Comment extends Controller
 {
@@ -17,31 +18,40 @@ class Comment extends Controller
 
                     $probslnum = intval($probslno);
                     if(DB::table('posts')->where('slno',$probslnum)->count()>0){
+                        $validator = Validator::make($req->all(), [
+                            'comment' => 'required'
 
-                        $com = $req->input('comment');
-                        $charactersToReplace = ['<', '>', '/'];
-                        $replacementCharacters = ['&lt;', '&gt;', '&#47;'];
-
-                        $commnt = str_replace($charactersToReplace, $replacementCharacters, $com);
-                        $userslnum = intval($usersl);
-
-                        $com_submit = DB::table('comments')->insert([
-                            'post_slno'=> $probslnum,
-                            'comment_user_slno'=> $userslnum,
-                            'comment'=> $commnt,
-                            'like_amount'=>0,
-                            'dislike_amount'=>0
                         ]);
-                        if($com_submit){
+                        if ($validator->fails()) {
                             return response()->json([
-                                'message'=>'Comment Successful'
-                            ],200);
+                                'message' => 'Validation failed',
+                                'errors' => $validator->errors()
+                            ], 200);
                         }else{
-                            return response()->json([
-                                'message'=>'Comment Failed'
-                            ],200);
-                        }
+                            $com = $req->input('comment');
+                            $charactersToReplace = ['<', '>', '/'];
+                            $replacementCharacters = ['&lt;', '&gt;', '&#47;'];
 
+                            $commnt = str_replace($charactersToReplace, $replacementCharacters, $com);
+                            $userslnum = intval($usersl);
+
+                            $com_submit = DB::table('comments')->insert([
+                                'post_slno'=> $probslnum,
+                                'comment_user_slno'=> $userslnum,
+                                'comment'=> $commnt,
+                                'like_amount'=>0,
+                                'dislike_amount'=>0
+                            ]);
+                            if($com_submit){
+                                return response()->json([
+                                    'message'=>'Comment Successful'
+                                ],200);
+                            }else{
+                                return response()->json([
+                                    'message'=>'Comment Failed'
+                                ],200);
+                            }
+                        }    
                     }else{
                         return response()->json([
                             'message'=>'Post No Longer Exists...'

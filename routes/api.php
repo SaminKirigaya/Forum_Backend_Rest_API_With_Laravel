@@ -21,6 +21,7 @@ use App\Http\Controllers\MyPost;
 use App\Http\Controllers\SearchPost;
 use App\Http\Controllers\Solve;
 use App\Http\Controllers\Comment;
+use App\Http\Controllers\MyPostEdit;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -67,6 +68,10 @@ Route::get('/latestpost',[LatestPost::class,'latestpost']); // latest post
 Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); //navbar dropdown choice to see which code language problem u want
 
 Route::get('/mypost/{usersl}/{tokenz}',[MyPost::class,'mypost']); // seeing own post in profile
+
+Route::get('/mypostedit/{usersl}/{tokenz}/{postno}',[MyPostEdit::class,'mypostedit']); // my post edit page where we see old data first
+
+Route::post('/myposteditsub/{usersl}/{tokenz}/{postno}',[MyPostEditSub::class,'myposteditsub']); // after editing clicking the button it work
 
 Route::post ('/searchpost/{usersl}/{tokenz}',[SearchPost::class,'searchpost']); // after client logging if search a post
 
