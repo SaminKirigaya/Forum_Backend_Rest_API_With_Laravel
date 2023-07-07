@@ -49,11 +49,11 @@ Route::post('/changepasssub/{usersl}/{tokenz}',[Changepasssub::class,'changepass
 
 Route::get('/logout/{usersl}/{tokenz}',[Logout::class,'logout']); // after logout is clicked
 
-Route::get('/delete/{tokenz}',[Delete::class,'delete']);
+Route::get('/delete/{tokenz}',[Delete::class,'delete']); // direct accoount deleting
 
 Route::post('/forgotpass',[Forgotpass::class,'forgotpass']); // forgot password after giving email
 
-Route::post('/post/{usersl}/{tokenz}',[Post::class,'post']); // posting comment
+Route::post('/post/{usersl}/{tokenz}',[Post::class,'post']); // posting a post
 
 Route::get('/postTypes',[Posttypes::class,'posttypes']); // get types of posts
 
@@ -63,3 +63,4 @@ Route::get('/latestpost',[LatestPost::class,'latestpost']); // latest post
 
 Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); //navbar dropdown choice to see which code language problem u want
 
+Route::get('/mypost/{usersl}/{tokenz}',[MyPost::class,'mypost']); // seeing own post in profile

@@ -10,10 +10,15 @@ class Delete extends Controller
     public function delete(Request $req, $tokenz){
         if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
             $mailz = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
-            $user_deleted = DB::table('users')->where('email',$mailz->user_email)->delete();
+            $user_slno = DB::table('users')->select('slno')->where('email',$mailz->user_email)->first();
+            
+            
+
+            $user_deleted = DB::table('users')->where('email',$mailz->user_email)->delete(); //del acc from users db
 
             if($user_deleted){
 
+                DB::table('posts')->where('user_slno',$user_slno->slno)->delete(); //del this user posts who is deleting acc
                 DB::table('tokendb')->where('token',$tokenz)->delete();
                 return response()->json([
                     'message' => 'Account Deleted',
