@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Logout extends Controller
 {
-    public function logout(Request $req, $usersl, $tokenz){
+    public function logout(Request $req, $usersl){
+        $tokenz = $req->bearerToken();
         $sl_exist = DB::table('users')->where('slno',$usersl)->count()>0;
         if($sl_exist){
             $token_in_db = DB::table('tokendb')->where('token',$tokenz)->count()>0;

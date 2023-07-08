@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 class Comment extends Controller
 {
-    public function comment(Request $req, $usersl, $tokenz, $probslno){
+    public function comment(Request $req, $usersl, $probslno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
 

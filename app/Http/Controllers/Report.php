@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Report extends Controller
 {
-    public function report(Request $req, $usersl, $tokenz, $postno){
+    public function report(Request $req, $usersl, $postno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 $tok_email = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();

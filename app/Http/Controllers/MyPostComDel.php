@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class MyPostComDel extends Controller
 {
-    public function mypostcomdel(Request $req, $usersl, $tokenz, $comntno){
+    public function mypostcomdel(Request $req, $usersl, $comntno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 $tok_email = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();

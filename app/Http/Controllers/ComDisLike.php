@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ComDisLike extends Controller
 {
-    public function comdislike(Request $req, $usersl, $tokenz, $comntno){
+    public function comdislike(Request $req, $usersl, $comntno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 if(DB::table('comments')->where('slno',$comntno)->count()>0){

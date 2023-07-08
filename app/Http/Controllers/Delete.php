@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Delete extends Controller
 {
-    public function delete(Request $req, $tokenz){
+    public function delete(Request $req){
+        $tokenz = $req->bearerToken();
         if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
             $mailz = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
             $user_slno = DB::table('users')->select('slno')->where('email',$mailz->user_email)->first();

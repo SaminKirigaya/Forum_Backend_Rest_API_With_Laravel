@@ -7,7 +7,8 @@ use illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class MyPostEditSub extends Controller
 {
-    public function myposteditsub(Request $req, $usersl, $tokenz, $postno){
+    public function myposteditsub(Request $req, $usersl, $postno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 $tok_email = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();

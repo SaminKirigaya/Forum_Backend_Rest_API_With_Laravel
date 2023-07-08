@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 class Changepasssub extends Controller
 {
-    public function changepasssub(Request $req, $usersl, $tokenz){
+    public function changepasssub(Request $req, $usersl){
+        $tokenz = $req->bearerToken();
         $num_exist = DB::table('users')->where('slno',$usersl)->count()>0; //if user serial no exist in users db
         if($num_exist){
         

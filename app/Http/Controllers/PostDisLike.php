@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PostDisLike extends Controller
 {
-    public function postdislike(Request $req,$usersl, $tokenz, $postno){
+    public function postdislike(Request $req,$usersl, $postno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 if(DB::table('posts')->where('slno',$postno)->count()>0){

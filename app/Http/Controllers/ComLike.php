@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class ComLike extends Controller
 {
-    public function comlike(Request $req, $usersl, $tokenz, $comntno){//actually postno mean comment number in here
+    public function comlike(Request $req, $usersl, $comntno){//actually postno mean comment number in here
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 if(DB::table('comments')->where('slno',$comntno)->count()>0){

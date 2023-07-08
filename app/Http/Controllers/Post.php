@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class Post extends Controller
 {
-    public function post(Request $req, $usersl, $tokenz){
+    public function post(Request $req, $usersl){
+        $tokenz = $req->bearerToken();
         $user_real = DB::table('users')->where('slno',$usersl)->count()>0;
         if($user_real){
             $logged_in = DB::table('tokendb')->where('token',$tokenz)->count()>0;

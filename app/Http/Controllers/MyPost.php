@@ -8,7 +8,8 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class MyPost extends Controller
 {
-    public function mypost(Request $req, $usersl, $tokenz){
+    public function mypost(Request $req, $usersl){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
 

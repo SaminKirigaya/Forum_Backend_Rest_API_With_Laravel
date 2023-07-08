@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Solve extends Controller
 {
-    public function solve(Request $req, $usersl, $tokenz, $probslno){
+    public function solve(Request $req, $usersl, $probslno){
+        $tokenz = $req->bearerToken();
         if(DB::table('users')->where('slno',$usersl)->count()>0){
             if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
                 $user_mail = DB::table('users')->select('email')->where('slno',$usersl)->first();

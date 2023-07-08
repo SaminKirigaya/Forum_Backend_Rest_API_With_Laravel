@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Profile extends Controller
 {
-    public function profile(Request $req,$usersl,$tokenz){
+    public function profile(Request $req,$usersl){
+        $tokenz = $req->bearerToken();
         $num_exist = DB::table('users')->where('slno',$usersl)->count()>0; //if user serial no exist in users db
         if($num_exist){
         
