@@ -49,6 +49,8 @@ use App\Http\Controllers\DelPersonalCom;
     return $request->user();
 });*/
 
+    // Routes that require CORS middleware
+    
 Route::post('/regs',[Registration::class,'registration']); //registration we need to update image link later
 
 Route::post('/login',[Login::class,'login']); //login
