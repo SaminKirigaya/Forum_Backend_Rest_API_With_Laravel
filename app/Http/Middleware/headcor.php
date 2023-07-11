@@ -16,11 +16,7 @@ class headcor
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->isMethod('OPTIONS')) {
-            $response = response('', 200);
-        } else {
-            $response = $next($request);
-        }
+        
     
 
         $response = $next($request);
