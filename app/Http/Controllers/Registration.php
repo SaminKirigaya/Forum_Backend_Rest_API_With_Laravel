@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class Registration extends Controller
 {
@@ -17,11 +20,12 @@ class Registration extends Controller
             'cpass' => 'required|same:pass',
             'countrys' => 'required|regex:/^([a-zA-Z]+)$/',
             'ages' => 'required|numeric|min:7|max:90',
-            'genders' => 'required|regex:/^([a-zA-Z]+)$/' //have to add imagelink required condition
+            'genders' => 'required|regex:/^([a-zA-Z]+)$/' ,
+            'images' => 'required|image|mimes:JPEG,JPG,jpg,jpeg|max:1024'//have to add imagelink required condition
         ]);
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed',
+                'message' => $validator->errors(),
                 'errors' => $validator->errors()
             ], 200);
         }else{
@@ -30,6 +34,9 @@ class Registration extends Controller
             $countryz = $req->input('countrys');
             $agez = $req->input('ages');
             $genderz = $req->input('genders');
+            $uploadedFile = $req->file('images');
+            $directory = 'public/images';
+            $fileName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
             //image must be added here that will be converted to asset link when front end is created
 
             $acc_exist = DB::table('users')->where('email',[$mail])->count()>0;
@@ -41,6 +48,8 @@ class Registration extends Controller
             }else{
 
                 //make hash pass
+                $uploadedFile->storeAs($directory, $fileName);
+                $url = url(Storage::url("$directory/$fileName"));
                 $pass2 = Hash::make($pass);
                 DB::table('users')->insert([
                     'email'=> $mail,
@@ -48,7 +57,7 @@ class Registration extends Controller
                     'country' => $countryz,
                     'age'=> $agez,
                     'gender'=> $genderz,
-                    'imglink'=> 'localdisk/something' //will update later
+                    'imglink'=> $url //will update later
 
         
                 ]);//enter inside DB
