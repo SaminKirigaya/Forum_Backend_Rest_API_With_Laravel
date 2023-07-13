@@ -9,15 +9,16 @@ class Logout extends Controller
 {
     public function logout(Request $req, $usersl){
         $tokenz = $req->bearerToken();
+        $usersl= intval($usersl);
         $sl_exist = DB::table('users')->where('slno',$usersl)->count()>0;
         if($sl_exist){
             $token_in_db = DB::table('tokendb')->where('token',$tokenz)->count()>0;
             if($token_in_db){
                 DB::table('tokendb')->where('token',$tokenz)->delete();
                 return response()->json([
-                    'message' => 'Logout Successful',
+                    'message' => 'Logout Successful'
                     
-                ], 200);
+                ],200);
 
 
             }else{

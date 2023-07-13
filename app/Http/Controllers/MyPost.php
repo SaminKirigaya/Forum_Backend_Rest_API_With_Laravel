@@ -17,7 +17,7 @@ class MyPost extends Controller
                 $token_mail = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
 
                 if($user_mail->email == $token_mail->user_email){
-                    $mypost = DB::table('posts')->select('*')->where('user_slno',$usersl)->get();
+                    $mypost = DB::table('posts')->select('*')->where('user_slno',$usersl)->orderBy('slno','desc')->get();
                     foreach($mypost as $myprofilepost){
                         $myprofilepost->email = $user_mail->email;
                     }

@@ -34,6 +34,7 @@ use App\Http\Controllers\ComDisLike;
 use App\Http\Controllers\MyPostComDel;
 use App\Http\Controllers\Report;
 use App\Http\Controllers\DelPersonalCom;
+use App\Http\Controllers\AmILogged;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -114,3 +115,5 @@ Route::get('/mypostcomdel/{usersl}/{comntno}',[MyPostComDel::class,'mypostcomdel
 Route::get('/report/{usersl}/{postno}',[Report::class,'report']); // reporting Posts
 
 Route::get('/delpersonalcom/{usersl}/{comntno}',[DelPersonalCom::class,'delpersonalcom']); // deleting personal comments where commenter sl num is deleters tokenz mail number based user sl same
+
+Route::get('/amilogged/{email}',[AmILogged::class,'amilogged']);

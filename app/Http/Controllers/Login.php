@@ -27,10 +27,8 @@ class Login extends Controller
 
                 $mail_in_tokendb = DB::table('tokendb')->where('user_email',[$mail])->count()>0;
                 if($mail_in_tokendb){
-                    return response()->json([
-                        'message' => 'Sorry You Are Already Logged In ...',
-                    ],200);
-                }else{
+                    DB::table('tokendb')->where('user_email',$mail)->delete();
+                }
                         $mail_exist = DB::table('users')->where('email',[$mail])->count()>0; //if email in database
                         if($mail_exist){//lets check otp or main db pass
 
@@ -93,7 +91,7 @@ class Login extends Controller
                                     'message' => 'Sorry Email Do Not Exist ... Make Sure To Insert Valid User Email.'
                                 ],200);
                             } //The email that was sent is false
-                    }
+                    
 
             
 
