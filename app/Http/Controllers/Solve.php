@@ -19,18 +19,31 @@ class Solve extends Controller
                     $probslnum = intval($probslno);// turning string post value to int
                     if(DB::table('posts')->where('slno',$probslnum)->count()>0){
                         $posts = DB::table('posts')->select('*')->where('slno',$probslnum)->first();// post serial no will be at button link
-                        foreach($posts as $postval){
-                            $user = DB::table('users')->select('email')->where('slno',$postval->user_slno)->first();
-                            $postval->author = $user->email;
+                        if ($posts) {
+                            $user = DB::table('users')->select('email','imglink')->where('slno', $posts->user_slno)->first();
+                            if ($user) {
+                                $posts->author = $user->email;
+                                $posts->image = $user->imglink;
+                            }
                         }
                         if(DB::table('comments')->where('post_slno',$posts->slno)->count()>0){
 
-                            $comments = DB::table('comments')->select('*')->where('post_slno',$posts->slno)->get();
-                            foreach($comments as $comnt){
-                                $users = DB::table('users')->select('email')->where('slno',$comnt->comment_user_slno)->first();
+                            $comments = DB::table('comments')->select('*')->where('post_slno',$posts->slno)->orderBy('slno','desc')->get();
 
-                                $comnt->author = $users->email;
+                            if($comments->count()==1){
+                                $comments = DB::table('comments')->select('*')->where('post_slno',$posts->slno)->first();
+                                $users = DB::table('users')->select('email','imglink')->where('slno',$comments->comment_user_slno)->first();
+                                $comments->author = $users->email;
+                                $comments->image = $users->imglink;
+                            }else{
+                                foreach($comments as $comnt){
+                                    $users = DB::table('users')->select('email','imglink')->where('slno',$comnt->comment_user_slno)->first();
+    
+                                    $comnt->author = $users->email;
+                                    $comnt->image = $users->imglink;
+                                }
                             }
+                            
                         }else{
                             $comments = [];
                         }

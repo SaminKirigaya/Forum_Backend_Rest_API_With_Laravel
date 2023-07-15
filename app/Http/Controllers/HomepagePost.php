@@ -9,9 +9,10 @@ class HomepagePost extends Controller
     public function homepagepost(Request $req){
         $homePost = DB::table('posts')->inRandomOrder()->get();
         foreach ($homePost as $post) {
-            $user = DB::table('users')->select('email')->where('slno', $post->user_slno)->first();
+            $user = DB::table('users')->select('email','imglink')->where('slno', $post->user_slno)->first();
             
-            $post->author_email = $user ? $user->email : "Unknowm";
+            $post->author_email = $user ? $user->email : "Unknown";
+            $post->author_image = $user ? $user->imglink : "Unknown";
         }
 
         

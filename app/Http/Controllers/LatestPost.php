@@ -9,8 +9,9 @@ class LatestPost extends Controller
     public function latestpost(){
         $top_posts = DB::table('posts')->orderBy('slno', 'desc')->get();
         foreach ($top_posts as $post) {
-            $user = DB::table('users')->select('email')->where('slno', $post->user_slno)->first();
+            $user = DB::table('users')->select('email','imglink')->where('slno', $post->user_slno)->first();
             $post->author_email = $user->email;
+            $post->image = $user->imglink;
         }
 
         return response()->json([

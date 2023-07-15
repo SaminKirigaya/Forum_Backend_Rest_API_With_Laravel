@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class AmILogged extends Controller
 {
     public function amilogged(Request $req, $email){
-        if(DB::table('tokendb')->where('user_email',$email)->count()>0){
+        if(DB::table('tokendb')->where('token',$email)->count()>0){
             return response()->json([
                 'message' => 'Yes'
             ],200);

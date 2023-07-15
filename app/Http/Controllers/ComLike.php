@@ -15,8 +15,8 @@ class ComLike extends Controller
                     $tok_email = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
                     $usrsl_email = DB::table('users')->select('email')->where('slno',$usersl)->first();
                     if($tok_email->user_email == $usrsl_email->email){
-                        if(DB::table('comment_dislike')->where('comment_slno',$usersl)->where('user_email',$usrsl_email->email)->count()>0){
-                            DB::table('comment_dislike')->where('comment_slno',$usersl)->where('user_email',$usrsl_email->email)->delete();
+                        if(DB::table('comment_dislike')->where('comment_slno',$comntno)->where('user_email',$usrsl_email->email)->count()>0){
+                            DB::table('comment_dislike')->where('comment_slno',$comntno)->where('user_email',$usrsl_email->email)->delete();
                             DB::table('comment_like')->insert([
                                 'comment_slno'=> $comntno,
                                 'user_email'=> $usrsl_email->email
@@ -34,7 +34,11 @@ class ComLike extends Controller
                                 'dislike_amount'=>$like->dislike_amount
                             ]);
 
-                        }else if(DB::table('comment_like')->where('comment_slno',$usersl)->where('user_email',$usrsl_email->email)->count()>0){
+                            return response()->json([
+                                'message'=>'Success'
+                            ],200);
+
+                        }else if(DB::table('comment_like')->where('comment_slno',$comntno)->where('user_email',$usrsl_email->email)->count()>0){
                             return response()->json([
                                 'message'=>'Failed'
                             ],200);
@@ -48,6 +52,10 @@ class ComLike extends Controller
                             DB::table('comments')->where('slno',$comntno)->update([
                                 'like_amount'=>$like->like_amount
                             ]);
+
+                            return response()->json([
+                                'message'=>'Success'
+                            ],200);
                         }
                     }else{
                         return response()->json([

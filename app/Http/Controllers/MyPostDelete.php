@@ -21,8 +21,14 @@ class MyPostDelete extends Controller
                             $delpost = DB::table('posts')->where('slno',$postno)->delete();
                             if($delpost){
                                 DB::table('comments')->where('post_slno',$postno)->delete();
+                                $mypost = DB::table('posts')->select('*')->where('user_slno',$usersl)->orderBy('slno','desc')->get();
+                                $user_mail = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                foreach($mypost as $myprofilepost){
+                                    $myprofilepost->email = $user_mail->email;
+                                }
                                 return response()->json([
-                                    'message'=>'Post Deleted Successfully.'
+                                    'message'=>'Post Deleted Successfully.',
+                                    'updatedpost' => $mypost
                                 ],200);
                             }else{
                                 return response()->json([

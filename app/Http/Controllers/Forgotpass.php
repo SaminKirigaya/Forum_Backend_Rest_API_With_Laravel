@@ -44,7 +44,7 @@ class Forgotpass extends Controller
                         'otp' => $new_pass_hash
                     ]);
                     return response()->json([
-                        'message' => 'Successful'
+                        'message' => 'Successful!!! Check Your Mail For New Password. After Login With That You Can Change Password As You Want !'
                     ],200);
                 }
 

@@ -49,8 +49,34 @@ class Comment extends Controller
                                 DB::table('posts')->where('slno',$probslnum)->update([
                                     'total_comments'=> $comnt->total_comments
                                 ]);
+
+                                $posts = DB::table('posts')->select('*')->where('slno',$probslnum)->first();
+                                $user = DB::table('users')->select('email','imglink')->where('slno', $posts->user_slno)->first();
+                                if ($user) {
+                                    $posts->author = $user->email;
+                                    $posts->image = $user->imglink;
+                                }
+
+                                $comments = DB::table('comments')->select('*')->where('post_slno',$posts->slno)->orderBy('slno','desc')->get();
+
+                                if($comments->count() == 1){
+                                    $comments = DB::table('comments')->select('*')->where('post_slno',$posts->slno)->first();
+                                    $users = DB::table('users')->select('email','imglink')->where('slno',$comments->comment_user_slno)->first();
+                                    $comments->author = $users->email;
+                                    $comments->image = $users->imglink;
+
+                                }else{
+                                    foreach($comments as $comnt){
+                                        $users = DB::table('users')->select('email','imglink')->where('slno',$comnt->comment_user_slno)->first();
+
+                                        $comnt->author = $users->email;
+                                        $comnt->image = $users->imglink;
+                                    }
+                                }
                                 return response()->json([
-                                    'message'=>'Comment Successful'
+                                    'message'=>'Comment Successful',
+                                    'update_post' => $posts,
+                                    'comments' => $comments
                                 ],200);
                                 
 

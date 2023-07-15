@@ -15,8 +15,8 @@ class PostLike extends Controller
                     $tok_email = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
                     $usrsl_email = DB::table('users')->select('email')->where('slno',$usersl)->first();
                     if($tok_email->user_email == $usrsl_email->email){
-                        if(DB::table('post_dislike')->where('post_slno',$usersl)->where('user_email',$usrsl_email->email)->count()>0){
-                            DB::table('post_dislike')->where('post_slno',$usersl)->where('user_email',$usrsl_email->email)->delete();
+                        if(DB::table('post_dislike')->where('post_slno',$postno)->where('user_email',$usrsl_email->email)->count()>0){
+                            DB::table('post_dislike')->where('post_slno',$postno)->where('user_email',$usrsl_email->email)->delete();
                             DB::table('post_like')->insert([
                                 'post_slno'=> $postno,
                                 'user_email'=> $usrsl_email->email
@@ -34,7 +34,7 @@ class PostLike extends Controller
                                 'dislike_amount'=>$like->dislike_amount
                             ]);
 
-                        }else if(DB::table('post_like')->where('post_slno',$usersl)->where('user_email',$usrsl_email->email)->count()>0){
+                        }else if(DB::table('post_like')->where('post_slno',$postno)->where('user_email',$usrsl_email->email)->count()>0){
                             return response()->json([
                                 'message'=>'Failed'
                             ],200);

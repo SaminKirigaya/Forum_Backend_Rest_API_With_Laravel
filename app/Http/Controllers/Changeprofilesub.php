@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Storage;
 class Changeprofilesub extends Controller
 {
     public function changeprofilesub(Request $req, $usersl){
@@ -23,8 +23,14 @@ class Changeprofilesub extends Controller
                         'email' => 'required|email',
                         'countrys' => 'required|regex:/^([a-zA-Z]+)$/',
                         'ages' => 'required|numeric|min:7|max:90',
-                        'genders' => 'required|regex:/^([a-zA-Z]+)$/' //have to add imagelink required condition
+                        'genders' => 'required|regex:/^([a-zA-Z]+)$/',
+                         //have to add imagelink required condition
                     ]);
+                    if ($req->hasFile('images')) {
+                        $validator->sometimes('images', 'image|mimes:jpeg,jpg,png|max:1024', function ($input) {
+                            return $input->hasFile('images');
+                        });
+                    }
                     if ($validator->fails()) {
                         return response()->json([
                             'message' => 'Validation failed',
@@ -37,6 +43,7 @@ class Changeprofilesub extends Controller
                         $countryz = $req->input('countrys');
                         $agez = $req->input('ages');
                         $genderz = $req->input('genders');
+                        
                         //image must be added here that will be converted to asset link when front end is created
 
                         $acc_exist = DB::table('users')->where('email',[$mail])->count()>0;
@@ -44,23 +51,51 @@ class Changeprofilesub extends Controller
                             $exist_acc_slno = DB::table('users')->select('slno')->where('email',$mail)->first();
                             if($exist_acc_slno->slno == $usersl){
 
-                                $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
-                                DB::table('tokendb')->where('user_email',$realmail->email)->delete();
-                                
-                                DB::table('users')->where('slno',$usersl)->update([
-                                    'email'=> $mail,
-                                    
-                                    'country' => $countryz,
-                                    'age'=> $agez,
-                                    'gender'=> $genderz,
-                                    'imglink'=> 'localdisk/something' // will update later
-                
-                        
-                                ]);//update inside DB
-                                return response()->json([
-                                    'message' => 'Successful',
-                                ],200);
+                                if($req->file('images')){
+                                    $uploadedFile = $req->file('images');
+                                    $directory = 'public/images';
+                                    $fileName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+                                    $uploadedFile->storeAs($directory, $fileName);
 
+                                    $url = url(Storage::url("$directory/$fileName"));
+                                    $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                    DB::table('tokendb')->where('user_email',$realmail->email)->delete();
+                                    
+                                    DB::table('users')->where('slno',$usersl)->update([
+                                        'email'=> $mail,
+                                        
+                                        'country' => $countryz,
+                                        'age'=> $agez,
+                                        'gender'=> $genderz,
+                                        'imglink'=> $url// will update later
+                    
+                            
+                                    ]);//update inside DB
+                                    return response()->json([
+                                        'message' => 'Successful',
+                                    ],200);
+                                }
+                                else{
+                                    $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                    DB::table('tokendb')->where('user_email',$realmail->email)->delete();
+                                    
+                                    DB::table('users')->where('slno',$usersl)->update([
+                                        'email'=> $mail,
+                                        
+                                        'country' => $countryz,
+                                        'age'=> $agez,
+                                        'gender'=> $genderz,
+                                        // will update later
+                    
+                            
+                                    ]);//update inside DB
+                                    return response()->json([
+                                        'message' => 'Successful',
+                                    ],200);
+
+                                }
+                                
+                                
 
                             }else{
                                 return response()->json([
@@ -69,22 +104,50 @@ class Changeprofilesub extends Controller
                             }
                             
                         }else{
-                            $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
-                            DB::table('tokendb')->where('user_email',$realmail->email)->delete();
 
-                            DB::table('users')->where('slno',$usersl)->update([
-                                'email'=> $mail,
-                                
-                                'country' => $countryz,
-                                'age'=> $agez,
-                                'gender'=> $genderz,
-                                'imglink'=> 'localdisk/something'// will update later
-            
-                    
-                            ]);//update inside DB
-                            return response()->json([
-                                'message' => 'Successful Please Login Again.',
-                            ],200);
+                                if($req->file('images')){
+
+                                    $uploadedFile = $req->file('images');
+                                    $directory = 'public/images';
+                                    $fileName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+                                    $uploadedFile->storeAs($directory, $fileName);
+
+                                    $url = url(Storage::url("$directory/$fileName"));
+                                    $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                    DB::table('tokendb')->where('user_email',$realmail->email)->delete();
+
+                                    DB::table('users')->where('slno',$usersl)->update([
+                                    'email'=> $mail,
+                                    
+                                    'country' => $countryz,
+                                    'age'=> $agez,
+                                    'gender'=> $genderz,
+                                    'imglink'=> $url// will update later
+                
+                        
+                                ]);//update inside DB
+                                return response()->json([
+                                    'message' => 'Successful Please Login Again.',
+                                ],200);
+                            
+                            }else{
+                                    $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                    DB::table('tokendb')->where('user_email',$realmail->email)->delete();
+
+                                    DB::table('users')->where('slno',$usersl)->update([
+                                    'email'=> $mail,
+                                    
+                                    'country' => $countryz,
+                                    'age'=> $agez,
+                                    'gender'=> $genderz,
+                                    
+                
+                        
+                                ]);//update inside DB
+                                return response()->json([
+                                    'message' => 'Successful Please Login Again.',
+                                ],200);
+                            }
                             
                             
                         }
