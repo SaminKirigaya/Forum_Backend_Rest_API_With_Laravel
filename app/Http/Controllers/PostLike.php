@@ -34,6 +34,24 @@ class PostLike extends Controller
                                 'dislike_amount'=>$like->dislike_amount
                             ]);
 
+                            $author = DB::table('posts')->select('user_slno')->where('slno',$postno)->first();
+                            $commenter = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                            if($author->user_slno != intval($usersl )){
+                                DB::table('notification')->insert([
+                                    'owner_slno' => $author->user_slno,
+                                    'commenter_slno' => $usersl,
+                                    'commenter_email' => $commenter->email,
+                                    'reason' => 'Liked Your Post.',
+                                    'post_slno' => $postno
+                                ]);
+                            }
+
+                            return response()->json([
+                                'message'=>'Success'
+                            ],200);
+
+
+
                         }else if(DB::table('post_like')->where('post_slno',$postno)->where('user_email',$usrsl_email->email)->count()>0){
                             return response()->json([
                                 'message'=>'Failed'
@@ -48,6 +66,22 @@ class PostLike extends Controller
                             DB::table('posts')->where('slno',$postno)->update([
                                 'like_amount'=>$like->like_amount
                             ]);
+
+
+                            $author = DB::table('posts')->select('user_slno')->where('slno',$postno)->first();
+                            $commenter = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                            if($author->user_slno != intval($usersl )){
+                                DB::table('notification')->insert([
+                                    'owner_slno' => $author->user_slno,
+                                    'commenter_slno' => $usersl,
+                                    'commenter_email' => $commenter->email,
+                                    'reason' => 'Liked Your Post.',
+                                    'post_slno' => $postno
+                                ]);
+                            }
+                            return response()->json([
+                                'message'=>'Success'
+                            ],200);
                         }
                     }else{
                         return response()->json([

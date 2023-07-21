@@ -15,9 +15,17 @@ class HomepagePost extends Controller
             $post->author_image = $user ? $user->imglink : "Unknown";
         }
 
-        
+        $top_posts = DB::table('posts')->orderBy('slno', 'desc')->get();
+        foreach ($top_posts as $post) {
+            $user = DB::table('users')->select('email','imglink')->where('slno', $post->user_slno)->first();
+            $post->author_email = $user->email;
+            $post->image = $user->imglink;
+        }
+
         return response()->json([
-            'randomposts' => $homePost
+            'randomposts' => $homePost,
+            'toppost' => $top_posts
         ],200);
+    
     }
 }

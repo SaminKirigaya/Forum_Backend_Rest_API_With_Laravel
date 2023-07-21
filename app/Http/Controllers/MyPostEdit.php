@@ -18,7 +18,7 @@ class MyPostEdit extends Controller
                     if(DB::table('posts')->where('slno',$postno)->count()>0){
                         $userslnum = intval($usersl);
                         $postauthor = DB::table('posts')->select('user_slno')->where('slno',$postno)->first();
-                        if($postauthor==$userslnum){
+                        if($postauthor->user_slno==$userslnum){
                             $editPostData = DB::table('posts')->select('*')->where('slno',$postno)->first();
                             return response()->json([
                                 'message'=>'Successful',

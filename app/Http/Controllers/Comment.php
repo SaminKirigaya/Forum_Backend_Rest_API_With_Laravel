@@ -43,7 +43,21 @@ class Comment extends Controller
                                 'like_amount'=>0,
                                 'dislike_amount'=>0
                             ]);
+                            
+
                             if($com_submit){
+                                $author = DB::table('posts')->select('user_slno')->where('slno',$probslnum)->first();
+                                $commenter = DB::table('users')->select('email')->where('slno',$usersl)->first();
+                                if($author->user_slno != intval($usersl )){
+                                    DB::table('notification')->insert([
+                                        'owner_slno' => $author->user_slno,
+                                        'commenter_slno' => $usersl,
+                                        'commenter_email' => $commenter->email,
+                                        'reason' => 'Commenter In Your Post.',
+                                        'post_slno' => $probslnum
+                                    ]);
+                                }
+
                                 $comnt = DB::table('posts')->select('total_comments')->where('slno',$probslnum)->first();
                                 $comnt->total_comments = $comnt->total_comments+1;
                                 DB::table('posts')->where('slno',$probslnum)->update([

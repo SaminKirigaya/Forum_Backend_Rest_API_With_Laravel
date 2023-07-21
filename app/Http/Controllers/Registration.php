@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 
 
@@ -49,7 +50,14 @@ class Registration extends Controller
 
                 //make hash pass
                 $uploadedFile->storeAs($directory, $fileName);
+                $imagePath = storage_path("app/$directory/$fileName");
+                $image = \Intervention\Image\Facades\Image::make($imagePath)->resize(100, 100);
+                
+                $image->save($imagePath,50);
+
+
                 $url = url(Storage::url("$directory/$fileName"));
+                
                 $pass2 = Hash::make($pass);
                 DB::table('users')->insert([
                     'email'=> $mail,

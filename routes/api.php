@@ -35,6 +35,12 @@ use App\Http\Controllers\MyPostComDel;
 use App\Http\Controllers\Report;
 use App\Http\Controllers\DelPersonalCom;
 use App\Http\Controllers\AmILogged;
+use App\Http\Controllers\DelMyCom;
+use App\Http\Controllers\AdminDeleteComs;
+use App\Http\Controllers\Notification;
+use App\Http\Controllers\DelNotify;
+use App\Http\Controllers\SeeOther;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -78,7 +84,7 @@ Route::get('/postTypes',[Posttypes::class,'posttypes']); // get types of posts w
 
 Route::get('/homepost',[HomepagePost::class,'homepagepost']); //get random post data for homepage at first page but no view more button there if user logged out
 
-Route::get('/latestpost',[LatestPost::class,'latestpost']); // latest post in sidebar
+
 
 Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); //navbar dropdown choice to see which code language problem u want
 
@@ -88,7 +94,7 @@ Route::get('/mypostedit/{usersl}/{postno}',[MyPostEdit::class,'mypostedit']); //
 
 Route::post('/myposteditsub/{usersl}/{postno}',[MyPostEditSub::class,'myposteditsub']); // after editing my post in profile clicking the button it work
 
-Route::post ('/searchpost/{usersl}',[SearchPost::class,'searchpost']); // after client logging if search a post
+Route::get ('/searchpost/{usersl}/{searchdata}',[SearchPost::class,'searchpost']); // after client logging if search a post
 
 Route::get('/solve/{usersl}/{probslno}',[Solve::class,'solve']); //solving page where we see post comment and see comments for this specific prob no
 
@@ -117,3 +123,13 @@ Route::get('/report/{usersl}/{postno}',[Report::class,'report']); // reporting P
 Route::get('/delpersonalcom/{usersl}/{comntno}',[DelPersonalCom::class,'delpersonalcom']); // deleting personal comments where commenter sl num is deleters tokenz mail number based user sl same
 
 Route::get('/amilogged/{email}',[AmILogged::class,'amilogged']);
+
+Route::get('/delmycom/{usersl}/{comno}',[DelMyCom::class,'delmycom']);
+
+Route::get('/admindeletecoms/{usersl}/{postno}/{comno}',[AdminDeleteComs::class,'admindeletecoms']);
+
+Route::get('/notification/{usersl}',[Notification::class,'notification']);
+
+Route::get('/delnotif/{usersl}/{highestsl}',[DelNotify::class,'delnotify']);
+
+Route::get('/seeother/{usersl}/{mail}',[SeeOther::class,'seeother']);

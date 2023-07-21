@@ -30,7 +30,7 @@ class Report extends Controller
                         }else{
                             if(DB::table('report')->where('post_slno',$postno)->where('email',$tok_email->user_email)->count()>0){
                                 return response()->json([
-                                    'message'=>'Reported Successfully A Long Ago.'
+                                    'message'=>'You May Have Already Reported It.'
                                 ],200);
                             }else{
                                 DB::table('report')->insert([

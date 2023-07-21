@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class MyPostEditSub extends Controller
 {
@@ -35,7 +35,7 @@ class MyPostEditSub extends Controller
                                 $replacementCharacters = ['&lt;', '&gt;', '&#47;','&#59;'];
 
                                 $postName = str_replace($charactersToReplace, $replacementCharacters, $req->input('introduction'));
-                                $probVal = str_replace($charactersToReplace, $replacementCharacters, $req->input('mainpost'));
+                                $probVal = str_replace($charactersToReplace, $replacementCharacters, $req->input('mainPost'));
                                 $postType = $req->input('postType');
 
                                 $updateDB = DB::table('posts')->where('slno',$postno)->update([
