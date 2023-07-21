@@ -23,6 +23,8 @@ You can use it if you like just mail me and give credit kindly also change my im
 - Hashed System
 - Report System In Post
 - Post Like Dislike With Comment Like Dislike
+- Post Deleting System
+- Post Author Can Delete All Comments
 - User Comment Deleting System
 - Client Images Are Converted Before Saving With Intervention Image.
 - Full User Profile Menu
