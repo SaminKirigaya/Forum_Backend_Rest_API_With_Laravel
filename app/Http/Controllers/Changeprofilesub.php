@@ -57,6 +57,11 @@ class Changeprofilesub extends Controller
                                     $fileName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
                                     $uploadedFile->storeAs($directory, $fileName);
 
+                                    $imagePath = storage_path("app/$directory/$fileName");
+                                    $image = \Intervention\Image\Facades\Image::make($imagePath)->resize(100, 100);
+                                    
+                                    $image->save($imagePath,50);
+
                                     $url = url(Storage::url("$directory/$fileName"));
                                     $realmail = DB::table('users')->select('email')->where('slno',$usersl)->first();
                                     DB::table('tokendb')->where('user_email',$realmail->email)->delete();

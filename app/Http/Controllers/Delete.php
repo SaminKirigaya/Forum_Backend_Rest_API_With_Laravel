@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Delete extends Controller
 {
@@ -11,14 +12,20 @@ class Delete extends Controller
         $tokenz = $req->bearerToken();
         if(DB::table('tokendb')->where('token',$tokenz)->count()>0){
             $mailz = DB::table('tokendb')->select('user_email')->where('token',$tokenz)->first();
-            $user_slno = DB::table('users')->select('slno')->where('email',$mailz->user_email)->first();
+            $user_slno = DB::table('users')->select('slno','imglink')->where('email',$mailz->user_email)->first();
             
             
 
             $user_deleted = DB::table('users')->where('email',$mailz->user_email)->delete(); //del acc from users db
-
+            
             if($user_deleted){
+                
+                $parts = explode('/', $user_slno->imglink);
+                $fileName = end($parts);
+               
+                $mainimg = storage_path("app/public/images/$fileName");
 
+                unlink($mainimg);
                 DB::table('posts')->where('user_slno',$user_slno->slno)->delete(); //del this user posts who is deleting acc
                 DB::table('tokendb')->where('token',$tokenz)->delete();
                 return response()->json([
