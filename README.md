@@ -7,60 +7,105 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Advanced Interactive Forum Design
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The whole project is created to make a full customized forum backend where a user will create id and share their problems to other, everyone will try to give each other solution.
+You can use it if you like just mail me and give credit kindly also change my image to your.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features Updated
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Account Customization
+- Changing Password With Authentication Via Mail
+- Hashed System
+- Report System In Post
+- Post Like Dislike With Comment Like Dislike
+- Post Deleting System
+- Post Author Can Delete All Comments
+- User Comment Deleting System
+- Client Images Are Converted Before Saving With Intervention Image.
+- Full User Profile Menu
+- Now Users Can Individually Check each Other & Their Posts
+- All Api Are Currently Working Fine With Our Frontend Project of React Js.
+  
 
-## Laravel Sponsors
+## Run Locally
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Just clone the project then make sure to : 
+Go .env file change 
 
-### Premium Partners
+APP_NAME=Forum
+APP_ENV=local
+APP_KEY=base64:udZiA7vf60JFvOShux3NbRcU2KC59e6QaZQ9lMFtOCc=
+APP_DEBUG=true
+APP_URL=http://192.168.0.109
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=forum
+DB_USERNAME=root
+DB_PASSWORD=
 
-## Contributing
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME= Your Smtp Mail
+MAIL_PASSWORD= That SMTP PASS
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="Your Email"
+MAIL_FROM_NAME="${APP_NAME}"
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Smtp was used for password changing at times of forget.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Optimizations
 
-## Security Vulnerabilities
+Added more responsive view for different displays.
+Made carousel effect optimized with respect to the device dislay change.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## API You Can Check In PostMan & Their Functions :
+Some route reuire [{usersl} - a serial] that is fixed for each user at registration, [{codename} - problem type] , [{postno} - post serial no ] , [{comno} - comment no ], [{searchdata} - search values from frontend form ], [{highestsl} - highest notification serial number till that period of a user ] , [{emial} - user mail ] 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Route::post('/regs',[Registration::class,'registration']); // For Registering A New User
+- Route::post('/login',[Login::class,'login']); //login
+- Route::get('/profile/{usersl}',[Profile::class,'profile']); // Each User After Registering Get Own Serial So Provide It With Link {usersl} also after Login They Get A Token both of this are used at time of authentication. This rout show profile data.
+- 
+- Route::get('/changeprofilepage/{usersl}',[Changeprofilepage::class,'changeprofilepage']); //Initial going to change profile data
+- Route::post('/changeprofilesub/{usersl}',[Changeprofilesub::class,'changeprofilesub']);  // Profile Data after changing clicking submit
+- Route::get('/changepasspage/{usersl}',[Changepasspage::class,'changepasspage']); //Changing Id pass page.
+- Route::post('/changepasssub/{usersl}',[Changepasssub::class,'changepasssub']); // After changing pass clicking submit route.
+- Route::get('/logout/{usersl}',[Logout::class,'logout']); // logout
+- Route::get('/delete',[Delete::class,'delete']);  // Id delete this cases aredone with Token
+- Route::post('/forgotpass',[Forgotpass::class,'forgotpass']); //Forgot pass route to get mail
+- Route::post('/post/{usersl}',[Post::class,'post']);  // Posting
+- Route::get('/postTypes',[Posttypes::class,'posttypes']); // Post types from type Database
+- Route::get('/homepost',[HomepagePost::class,'homepagepost']);  // Random & Top posts showing in Home page
+- Route::get('/topic/{codename}',[Topicpost::class,'topicpost']); // According to user problem type posts
+- Route::get('/mypost/{usersl}',[MyPost::class,'mypost']); // Seeing own post in a page with comments
+- Route::get('/mypostedit/{usersl}/{postno}',[MyPostEdit::class,'mypostedit']); // Parsing data from DB for editing of own post
+- Route::post('/myposteditsub/{usersl}/{postno}',[MyPostEditSub::class,'myposteditsub']); //Submiting post after changing
+- Route::get ('/searchpost/{usersl}/{searchdata}',[SearchPost::class,'searchpost']); // Search Field value sending to get post according to it.
+- Route::get('/solve/{usersl}/{probslno}',[Solve::class,'solve']);  // Solving Problems in A page seeing comments there too
+- Route::post('/comment/{usersl}/{probslno}',[Comment::class,'comment']); // Submiting comments
+- Route::get('/mypostdelete/{usersl}/{postno}',[MyPostDelete::class,'mypostdelete']); // Personal post delete
+- Route::get('/mycommentedPost/{usersl}',[MyCommentedPost::class,'mycommentedpost']); // Posts where user personally commented 
+- Route::get('/mycommentspecific/{usersl}/{postno}',[MyCommentSpecific::class,'mycommentspecific']); // Finding own comment for a specific post
+- Route::get('/ientered/{usersl}/{postno}',[IEnteredHere::class,'ienteredhere']); // After visiting someone's post a view adding function
+- Route::get('/postlike/{usersl}/{postno}',[PostLike::class,'postlike']); // post like button click
+- Route::get('/postdislike/{usersl}/{postno}',[PostDisLike::class,'postdislike']); // post dislike button click
+- Route::get('/comlike/{usersl}/{comntno}',[ComLike::class,'comlike']); // comment like button click
+- Route::get('/comdislike/{usersl}/{comntno}',[ComDisLike::class,'comdislike']); // comment like button click
+- Route::get('/mypostcomdel/{usersl}/{comntno}',[MyPostComDel::class,'mypostcomdel']); // when seeing own post in profile uwll see abutton to delete that post comment
+- Route::get('/report/{usersl}/{postno}',[Report::class,'report']); // reporting Posts
+- Route::get('/delpersonalcom/{usersl}/{comntno}',[DelPersonalCom::class,'delpersonalcom']); // deleting personal comments where commenter sl num is deleters tokenz mail number based user sl same
+- Route::get('/amilogged/{email}',[AmILogged::class,'amilogged']); // A user can check if he is logged in initially at startup if he had saved localstorage data in react js
+- Route::get('/delmycom/{usersl}/{comno}',[DelMyCom::class,'delmycom']); // Deleting personal comemnts in others post
+- Route::get('/admindeletecoms/{usersl}/{postno}/{comno}',[AdminDeleteComs::class,'admindeletecoms']); //Getting authority to delete all comments in personal post 
+- Route::get('/notification/{usersl}',[Notification::class,'notification']); // Seeing personal notification
+- Route::get('/delnotif/{usersl}/{highestsl}',[DelNotify::class,'delnotify']); // Deleting notification
+- Route::get('/seeother/{usersl}/{mail}',[SeeOther::class,'seeother']); // Seeing other profile and their post by clicking their name in posts view page it can also be a comment 
