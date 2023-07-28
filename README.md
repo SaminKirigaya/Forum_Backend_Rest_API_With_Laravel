@@ -60,7 +60,7 @@ MAIL_FROM_ADDRESS="Your Email"
 MAIL_FROM_NAME="${APP_NAME}"
 
 Smtp was used for password changing at times of forget.
-
+Forum.sql and Forum(1).sql are provided for database import both files are almost same its just one is quick exported!!! ENJOY
 
 ## Optimizations
 
